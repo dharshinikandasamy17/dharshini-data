@@ -1,0 +1,416 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "b797f33c-5e11-43c0-9776-e8764b1e994b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "8996ad50-5e3b-4df3-8df1-7f5c405ebc7b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "b33ed043-c1eb-4f59-a2fb-bf5c55883679",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "5154dc50-97d7-41bf-b16a-d41c3a4c86d0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "value=pd.read_csv(\"C:/Users/ELCOT/Downloads/weatherAUS.csv.zip\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "451d5a64-b411-4bb7-bf56-68e293fa3e0a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "         Date Location  MinTemp  MaxTemp  Rainfall  Evaporation  Sunshine  \\\n",
+      "0  2008-12-01   Albury     13.4     22.9       0.6          NaN       NaN   \n",
+      "1  2008-12-02   Albury      7.4     25.1       0.0          NaN       NaN   \n",
+      "2  2008-12-03   Albury     12.9     25.7       0.0          NaN       NaN   \n",
+      "3  2008-12-04   Albury      9.2     28.0       0.0          NaN       NaN   \n",
+      "4  2008-12-05   Albury     17.5     32.3       1.0          NaN       NaN   \n",
+      "\n",
+      "  WindGustDir  WindGustSpeed WindDir9am  ... Humidity9am  Humidity3pm  \\\n",
+      "0           W           44.0          W  ...        71.0         22.0   \n",
+      "1         WNW           44.0        NNW  ...        44.0         25.0   \n",
+      "2         WSW           46.0          W  ...        38.0         30.0   \n",
+      "3          NE           24.0         SE  ...        45.0         16.0   \n",
+      "4           W           41.0        ENE  ...        82.0         33.0   \n",
+      "\n",
+      "   Pressure9am  Pressure3pm  Cloud9am  Cloud3pm  Temp9am  Temp3pm  RainToday  \\\n",
+      "0       1007.7       1007.1       8.0       NaN     16.9     21.8         No   \n",
+      "1       1010.6       1007.8       NaN       NaN     17.2     24.3         No   \n",
+      "2       1007.6       1008.7       NaN       2.0     21.0     23.2         No   \n",
+      "3       1017.6       1012.8       NaN       NaN     18.1     26.5         No   \n",
+      "4       1010.8       1006.0       7.0       8.0     17.8     29.7         No   \n",
+      "\n",
+      "   RainTomorrow  \n",
+      "0            No  \n",
+      "1            No  \n",
+      "2            No  \n",
+      "3            No  \n",
+      "4            No  \n",
+      "\n",
+      "[5 rows x 23 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(value.head())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "c671c5d6-f4ba-4834-9176-db942e8ab149",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Date                 0\n",
+      "Location             0\n",
+      "MinTemp           1485\n",
+      "MaxTemp           1261\n",
+      "Rainfall          3261\n",
+      "Evaporation      62790\n",
+      "Sunshine         69835\n",
+      "WindGustDir      10326\n",
+      "WindGustSpeed    10263\n",
+      "WindDir9am       10566\n",
+      "WindDir3pm        4228\n",
+      "WindSpeed9am      1767\n",
+      "WindSpeed3pm      3062\n",
+      "Humidity9am       2654\n",
+      "Humidity3pm       4507\n",
+      "Pressure9am      15065\n",
+      "Pressure3pm      15028\n",
+      "Cloud9am         55888\n",
+      "Cloud3pm         59358\n",
+      "Temp9am           1767\n",
+      "Temp3pm           3609\n",
+      "RainToday         3261\n",
+      "RainTomorrow      3267\n",
+      "dtype: int64\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(value.isnull().sum())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "b2446323-4c32-4691-b0c3-6234e3a722d9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "value[\"Rainfall\"]=value[\"Rainfall\"].fillna(value[\"Rainfall\"].mean())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "31c7c33e-111a-4b2b-bd49-100e695a15af",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "np.float64(2.360918149916666)"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "value[\"Rainfall\"].mean()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "bca58e5f-2105-4d01-80ee-3ba0caea3678",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(value[\"Rainfall\"].isnull().sum())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "id": "75f15d11-62d0-42f6-bc2c-3adb33c002ad",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "              Date Location  MinTemp  MaxTemp  Rainfall  Evaporation  \\\n",
+      "0       2008-12-01   Albury     13.4     22.9       0.6          NaN   \n",
+      "1       2008-12-02   Albury      7.4     25.1       0.0          NaN   \n",
+      "2       2008-12-03   Albury     12.9     25.7       0.0          NaN   \n",
+      "3       2008-12-04   Albury      9.2     28.0       0.0          NaN   \n",
+      "4       2008-12-05   Albury     17.5     32.3       1.0          NaN   \n",
+      "...            ...      ...      ...      ...       ...          ...   \n",
+      "145455  2017-06-21    Uluru      2.8     23.4       0.0          NaN   \n",
+      "145456  2017-06-22    Uluru      3.6     25.3       0.0          NaN   \n",
+      "145457  2017-06-23    Uluru      5.4     26.9       0.0          NaN   \n",
+      "145458  2017-06-24    Uluru      7.8     27.0       0.0          NaN   \n",
+      "145459  2017-06-25    Uluru     14.9      NaN       0.0          NaN   \n",
+      "\n",
+      "        Sunshine WindGustDir  WindGustSpeed WindDir9am  ... Humidity9am  \\\n",
+      "0            NaN           W           44.0          W  ...        71.0   \n",
+      "1            NaN         WNW           44.0        NNW  ...        44.0   \n",
+      "2            NaN         WSW           46.0          W  ...        38.0   \n",
+      "3            NaN          NE           24.0         SE  ...        45.0   \n",
+      "4            NaN           W           41.0        ENE  ...        82.0   \n",
+      "...          ...         ...            ...        ...  ...         ...   \n",
+      "145455       NaN           E           31.0         SE  ...        51.0   \n",
+      "145456       NaN         NNW           22.0         SE  ...        56.0   \n",
+      "145457       NaN           N           37.0         SE  ...        53.0   \n",
+      "145458       NaN          SE           28.0        SSE  ...        51.0   \n",
+      "145459       NaN         NaN            NaN        ESE  ...        62.0   \n",
+      "\n",
+      "        Humidity3pm  Pressure9am  Pressure3pm  Cloud9am  Cloud3pm  Temp9am  \\\n",
+      "0              22.0       1007.7       1007.1       8.0       NaN     16.9   \n",
+      "1              25.0       1010.6       1007.8       NaN       NaN     17.2   \n",
+      "2              30.0       1007.6       1008.7       NaN       2.0     21.0   \n",
+      "3              16.0       1017.6       1012.8       NaN       NaN     18.1   \n",
+      "4              33.0       1010.8       1006.0       7.0       8.0     17.8   \n",
+      "...             ...          ...          ...       ...       ...      ...   \n",
+      "145455         24.0       1024.6       1020.3       NaN       NaN     10.1   \n",
+      "145456         21.0       1023.5       1019.1       NaN       NaN     10.9   \n",
+      "145457         24.0       1021.0       1016.8       NaN       NaN     12.5   \n",
+      "145458         24.0       1019.4       1016.5       3.0       2.0     15.1   \n",
+      "145459         36.0       1020.2       1017.9       8.0       8.0     15.0   \n",
+      "\n",
+      "        Temp3pm  RainToday  RainTomorrow  \n",
+      "0          21.8         No            No  \n",
+      "1          24.3         No            No  \n",
+      "2          23.2         No            No  \n",
+      "3          26.5         No            No  \n",
+      "4          29.7         No            No  \n",
+      "...         ...        ...           ...  \n",
+      "145455     22.4         No            No  \n",
+      "145456     24.5         No            No  \n",
+      "145457     26.1         No            No  \n",
+      "145458     26.0         No            No  \n",
+      "145459     20.9         No           NaN  \n",
+      "\n",
+      "[145460 rows x 23 columns]\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(value.drop_duplicates())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "id": "0f6dc5e2-6b6d-4fd7-b10a-70757107d43f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(value.duplicated().sum())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "id": "721aff82-dcd2-4f37-9aca-21a6e331020b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Date                 str\n",
+      "Location             str\n",
+      "MinTemp          float64\n",
+      "MaxTemp          float64\n",
+      "Rainfall         float64\n",
+      "Evaporation      float64\n",
+      "Sunshine         float64\n",
+      "WindGustDir          str\n",
+      "WindGustSpeed    float64\n",
+      "WindDir9am           str\n",
+      "WindDir3pm           str\n",
+      "WindSpeed9am     float64\n",
+      "WindSpeed3pm     float64\n",
+      "Humidity9am      float64\n",
+      "Humidity3pm      float64\n",
+      "Pressure9am      float64\n",
+      "Pressure3pm      float64\n",
+      "Cloud9am         float64\n",
+      "Cloud3pm         float64\n",
+      "Temp9am          float64\n",
+      "Temp3pm          float64\n",
+      "RainToday            str\n",
+      "RainTomorrow         str\n",
+      "dtype: object\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(value.dtypes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 20,
+   "id": "79c06f9f-df50-4303-a454-f311df297136",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "value[\"Date\"]=pd.to_datetime(value[\"Date\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "2b02bd92-b626-40ac-89dc-3e00d3f1d27a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Date                 0\n",
+      "Location             0\n",
+      "MinTemp           1485\n",
+      "MaxTemp           1261\n",
+      "Rainfall             0\n",
+      "Evaporation      62790\n",
+      "Sunshine         69835\n",
+      "WindGustDir      10326\n",
+      "WindGustSpeed    10263\n",
+      "WindDir9am       10566\n",
+      "WindDir3pm        4228\n",
+      "WindSpeed9am      1767\n",
+      "WindSpeed3pm      3062\n",
+      "Humidity9am       2654\n",
+      "Humidity3pm       4507\n",
+      "Pressure9am      15065\n",
+      "Pressure3pm      15028\n",
+      "Cloud9am         55888\n",
+      "Cloud3pm         59358\n",
+      "Temp9am           1767\n",
+      "Temp3pm           3609\n",
+      "RainToday         3261\n",
+      "RainTomorrow      3267\n",
+      "dtype: int64\n",
+      "0\n",
+      "Date             datetime64[us]\n",
+      "Location                    str\n",
+      "MinTemp                 float64\n",
+      "MaxTemp                 float64\n",
+      "Rainfall                float64\n",
+      "Evaporation             float64\n",
+      "Sunshine                float64\n",
+      "WindGustDir                 str\n",
+      "WindGustSpeed           float64\n",
+      "WindDir9am                  str\n",
+      "WindDir3pm                  str\n",
+      "WindSpeed9am            float64\n",
+      "WindSpeed3pm            float64\n",
+      "Humidity9am             float64\n",
+      "Humidity3pm             float64\n",
+      "Pressure9am             float64\n",
+      "Pressure3pm             float64\n",
+      "Cloud9am                float64\n",
+      "Cloud3pm                float64\n",
+      "Temp9am                 float64\n",
+      "Temp3pm                 float64\n",
+      "RainToday                   str\n",
+      "RainTomorrow                str\n",
+      "dtype: object\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(value.isnull().sum())\n",
+    "print(value.duplicated().sum())\n",
+    "print(value.dtypes)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "050c7e21-7166-424d-af39-c20360607c6c",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.14.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
